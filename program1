@@ -1,0 +1,17 @@
+import socket
+import os
+print("BattleShip game\n")
+F = open("own_board.txt","r");
+text = F.readlines()
+print("Here is your board");
+for x in text:
+    print(x)
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind (("127.0.0.1", 8080))
+s.listen(1)
+while 1:
+    connection, address = s.accept()
+    data = connection.recv(99999)
+    print(data)
+    connection.send("bois".encode())
+    connection.close
