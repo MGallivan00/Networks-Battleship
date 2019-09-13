@@ -1,0 +1,3 @@
+https://stackoverflow.com/questions/13214809/pretty-print-2d-python-list
+
+https://stackoverflow.com/questions/12807079/how-to-determined-if-a-2-dimensional-list-contain-a-value
