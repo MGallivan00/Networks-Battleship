@@ -11,12 +11,12 @@ def main():
     with open("own_board.txt") as text:
         board = [list(line.strip()) for line in text]
 
-    x, y = fire() # fire returns an x value and a y value
+    while 1:
+        x, y = fire() # fire returns an x value and a y value
+        board = result(int(x), int(y), board) # returns a new board array
 
-    board = result(int(x), int(y), board) # returns a new board array
 
-
-def fire():
+def fire(): # client function
 
     # ask for coordinates
     # split the coordinates
@@ -25,14 +25,13 @@ def fire():
     coordinates = coordinates.split(" ")
     content = "x=" + coordinates[0] + "&y=" + coordinates[1]
     print(content)
-    print(type(coordinates[0]))
 
     # need to send coordinates to server
 
     return coordinates[0], coordinates[1]
 
 
-def result(x, y, board):
+def result(x, y, board): # server function
     # need exceptions later
 
 
@@ -64,4 +63,4 @@ def result(x, y, board):
 
 
 
-main() 
+main()
