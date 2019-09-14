@@ -1,11 +1,56 @@
 import socket
 import os
+
+def result(x, y, board):
+    # need exceptions later
+
+
+    # check if the coordinates match a boat
+    # if it doesn't, print "Miss"
+    # if it does, prints "Hit", replaces the boat letter with a hit 'X'
+    # then checks if there are any more letters of that boat type
+    # (if the boat sunk or not)
+    # if none are found, print Sunk
+    if board[x][y] != '_':
+        print("Hit " + board[x][y] + "!")
+        temp = board[x][y]
+        board[x][y] = 'X'
+        if(not any(temp in sublist for sublist in board)):
+            print("Sunk!")
+
+
+
+    else:
+        print("Miss!")
+
+    # just a pretty way to print the board
+    print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in board]))
+
+
+    # returns the updated board
+    return board
+##########
+
 print("BattleShip game\n")
-F = open("own_board.txt","r");
-text = F.readlines()
+
+with open("own_board.txt") as text:
+    board = [list(line.strip()) for line in text]
 print("Here is your board");
-for x in text:
+for x in board:
     print(x)
+
+#
+post_format = """POST /test HTTP/1.1
+Host: foo.example
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 27
+
+field1=value1&field2=value2"""
+letter_o=post_format[28]
+print(letter_o);
+#
+
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind (("127.0.0.1", 8080))
 s.listen(1)
@@ -13,6 +58,10 @@ while 1:
     connection, address = s.accept()
     data = connection.recv(99999)
     #print(data)
-    print(data.decode()[0:3])
+    print(data.decode()[0])
+    if(data.decode()[0] == 'P'):
+        print("Is a post request, supported")
+    elif(data.decode()[0] == 'G'):
+        print("Is a get request, Not supported")
     connection.send("HTTP/1.1 200 OK\r\n".encode())
     connection.close
