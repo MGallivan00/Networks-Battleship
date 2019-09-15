@@ -70,8 +70,12 @@ def main():
 
         elif(data[0] == 'G'):
             print("Is a get request, Not supported")
-        connection.close
+        connection.close()
+        ans = input("Do you want to close the server? (yes/no)")
+        if(ans == "yes"):
+            break
 
+    s.close()
 
 main()
 

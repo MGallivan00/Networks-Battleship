@@ -7,7 +7,7 @@ import sys
 def fire():
 
     # format:
-    # $python client.py 127.0.0.1 8080  5    7
+    # $python3 client.py 127.0.0.1 8080  5    7
     #          [0]          [1]   [2]  [3]  [4]
 
     HOST = sys.argv[1]
