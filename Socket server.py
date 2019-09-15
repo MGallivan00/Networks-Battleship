@@ -17,7 +17,7 @@ def result(x, y, board):
     print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in board]))
 
     return result
-##########
+##############
 
 def main():
 
@@ -74,3 +74,5 @@ def main():
 
 
 main()
+
+# seeing if this works
