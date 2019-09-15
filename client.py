@@ -1,32 +1,34 @@
+
 import socket
 import sys
+# import requests
 
 
 def fire():
-    # coordinates from command line
 
-    HOST = sys.argv[0]
-    PORT = sys.argv[1]
-    xcor = sys.argv[2]
-    ycor = sys.argv[3]
+    # format:
+    # $python client.py 127.0.0.1 8080  5    7
+    #          [0]          [1]   [2]  [3]  [4]
 
-    # split the coordinates
-    # add the specific url content
+    HOST = sys.argv[1]
+    PORT = int(sys.argv[2])
+    xcor = sys.argv[3]
+    ycor = sys.argv[4]
 
-    content = "x=" + xcor + "&y=" + ycor
-    print(content)
+    content = "https://" + HOST + ":" + str(PORT) + "?x=" + xcor + "&y=" + ycor
 
-    requests.post('https://' + HOST + ":" + PORT + "?" + content)
-
-    # with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    #   s.connect((HOST, PORT))
-    #  s.sendall(b'Ready to play?')
-    # data = s.recv(1024)
-    # need to send coordinates to server
-
-    return xcor, ycor
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((HOST, PORT))
+        s.sendall(str.encode(content))
+        msg = s.recv(1024)
+        print('Received:', msg.decode("utf-8"))
 
 
-print(b'Received', repr(data))
 
-x, y = fire()
+
+fire() # send fire coordinates to server
+
+
+
+# receive an answer from server (hit or miss)
+# then update opponent own_board
