@@ -64,32 +64,41 @@ def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind (("127.0.0.1", (int(port_number))))
     s.listen(1)
-    while 1:
+    while True:
         connection, address = s.accept()
         data = connection.recv(99999).decode("utf-8") # receives encoded message and decodes it to data
         print("Data:", data)
-        # if(data[0] == 'P'):
-        print("Request type: POST (supported)")
-        print(data)
-        xcor = int(data[-5:-4])
-        ycor = int(data[-1:])
-        r = result(xcor, ycor, board)
-        content = data + r
-        print(content)
+        if(True): # for POST data[0] == 'P'
+            print("Request type: POST (supported)")
+            print(data)
+            xcor = int(data[-5:-4])
+            ycor = int(data[-1:])
 
+            if xcor < 0 or ycor < 0:
+                connection.sendall(str.encode("HTTP Bad Request"))
 
-        #if(result ==):
+            elif xcor > len(board) or ycor > len(board):
+                connection.sendall(str.encode("HTTP Not Found"))
 
-        #elif(data[0] == 'G'):
-        print("Is a get request, Not supported")
+            elif board[xcor][ycor] == 'X':
+                connection.sendall(str.encode("HTTP Gone"))
 
-        # we need to send the data now
-        connection.sendall(str.encode(content))
+            else:
+                r = result(xcor, ycor, board)
+                content = data + r
+                print(content)
+                connection.sendall(str.encode(content))
+
+        elif(data[0] == 'G'): # for GET
+            print("Request type: GET (unsupported)")
+
 
         connection.close()
         ans = input("Do you want to close the server? (yes/no)")
         if(ans == "yes"):
             break
+
+    #### END While loop
 
     s.close()
 
