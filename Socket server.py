@@ -12,7 +12,7 @@ def result(x, y, board):
         board[x][y] = 'X'
         if(not any(temp in sublist for sublist in board)):
             print("Sunk!")
-            result += "sink=" + temp
+            result += "\&sink=" + temp
     else:
         print("Miss!")
         result = "hit=0"
@@ -60,24 +60,24 @@ def main():
         connection, address = s.accept()
         data = connection.recv(99999).decode("utf-8") # receives encoded message and decodes it to data
         print("Data:", data)
-        if(data[0] == 'P'):
-            print("Request type: POST (supported)")
-            print(data)
-            xcor = int(data[-5:-4])
-            ycor = int(data[-1:])
-            r = result(xcor, ycor, board)
-            content = data + r
-            print(content)
+        # if(data[0] == 'P'):
+        print("Request type: POST (supported)")
+        print(data)
+        xcor = int(data[-5:-4])
+        ycor = int(data[-1:])
+        r = result(xcor, ycor, board)
+        content = data + r
+        print(content)
 
 
         #if(result ==):
 
-        elif(data[0] == 'G'):
-            print("Is a get request, Not supported")
+        #elif(data[0] == 'G'):
+        print("Is a get request, Not supported")
 
         # we need to send the data now
+        connection.sendall(str.encode(content))
 
-        
         connection.close()
         ans = input("Do you want to close the server? (yes/no)")
         if(ans == "yes"):
