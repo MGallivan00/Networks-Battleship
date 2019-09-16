@@ -1,6 +1,14 @@
 import socket
 import sys
 
+# TODO: we need to format the sends and responses as HTTP POST and HTTP response
+# TODO: we need to error check the bounds/message and send a HTTP not found/HTTP bad requests
+# TODO: We need to be able to update the current board and opponent board after each response
+#       The client should be able to visually inspect each board at these addresses:
+#       http://localhost:5000/own_board.html
+#       http://localhost:5000/opponent_board.html
+
+
 
 def result(x, y, board):
 
