@@ -6,13 +6,16 @@ def result(x, y, board):
 
     result = "null"
     if board[x][y] != '_':
-        result ="Hit " + board[x][y] + "!"
+        print("Hit " + board[x][y] + "!")
+        result = "hit=1"
         temp = board[x][y]
         board[x][y] = 'X'
         if(not any(temp in sublist for sublist in board)):
-            result ="Sunk!"
+            print("Sunk!")
+            result += "sink=" + temp
     else:
-        result = "Miss!"
+        print("Miss!")
+        result = "hit=0"
 
     print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in board]))
 
@@ -63,13 +66,18 @@ def main():
             xcor = int(data[-5:-4])
             ycor = int(data[-1:])
             r = result(xcor, ycor, board)
-            print(r)
+            content = data + r
+            print(content)
 
 
         #if(result ==):
 
         elif(data[0] == 'G'):
             print("Is a get request, Not supported")
+
+        # we need to send the data now
+
+        
         connection.close()
         ans = input("Do you want to close the server? (yes/no)")
         if(ans == "yes"):
