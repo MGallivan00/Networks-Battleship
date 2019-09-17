@@ -51,15 +51,12 @@ def main():
         print(x)
 
     ##format to send the fire result
-    post_format = """POST /test HTTP/1.1
-    Host: 127.0.0.1
-    Content-Type: application/x-www-form-urlencoded
-    Content-Length: 27
-    field1=value1&field2=value2"""
-    letter_o=post_format[28]
-    print(letter_o) # prints ':' ?
+    post_format = """   POST /test HTTP/1.1
+                        Host: 127.0.0.1
+                        Content-Type: application/x-www-form-urlencoded
+                        Content-Length: 27
 
-
+                        field1=value1&field2=value2 """
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind (("127.0.0.1", (int(port_number))))
@@ -68,7 +65,7 @@ def main():
         connection, address = s.accept()
         data = connection.recv(99999).decode("utf-8") # receives encoded message and decodes it to data
         print("Data:", data)
-        if(True): # for POST data[0] == 'P'
+        if(True): # "for POST:" data[0] == 'P'
             print("Request type: POST (supported)")
             print(data)
             xcor = int(data[-5:-4])
@@ -103,5 +100,3 @@ def main():
     s.close()
 
 main()
-
-# seeing if this works

@@ -1,7 +1,6 @@
 
 import socket
 import sys
-# import requests
 
 
 def fire():
@@ -15,7 +14,16 @@ def fire():
     xcor = sys.argv[3]
     ycor = sys.argv[4]
 
-    content = "https://" + HOST + ":" + str(PORT) + "?x=" + xcor + "&y=" + ycor
+    post_format = """   POST /test HTTP/1.1
+                        Host: 127.0.0.1
+                        Content-Type: application/x-www-form-urlencoded
+                        Content-Length: 27
+
+                        field1=value1&field2=value2 """
+
+    content = "POST \nHost: " + HOST + "\nContent-Type: \nContent-Length: \n\n" + "x=" + xcor + "&y=" + ycor
+    print(content)
+    # content = "https://" + HOST + ":" + str(PORT) + "?x=" + xcor + "&y=" + ycor
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT))
@@ -23,12 +31,7 @@ def fire():
         msg = s.recv(1024)
         print('Received:', msg.decode("utf-8"))
 
-
+        # update oponent board and my board
 
 
 fire() # send fire coordinates to server
-
-
-
-# receive an answer from server (hit or miss)
-# then update opponent own_board
