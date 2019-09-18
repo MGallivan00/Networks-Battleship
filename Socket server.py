@@ -1,11 +1,10 @@
 import socket
 import sys
 
-# TODO: Error in opponent_board [ALMOST FIXED!]
-# TODO: print statements clean up [ALMOST FIXED!]
-# TODO: error handling for arguments in terminal [FIXED!]
-# TODO: Add comments
-#       http://localhost:5000/opponent_board.html
+# TODO: Error in opponent_board [ALMOST DONE!]
+# TODO: print statements clean up [ALMOST DONE!]
+# TODO: error handling for arguments in terminal [DONE!]
+# TODO: Add comments [DONE!]
 
 
 
@@ -38,17 +37,24 @@ def result(x, y, board, records):
 
 def main():
 
-    # check the len() of argument
+
+    # checks if the length of arguments is correct
     if (len(sys.argv) == 1):
-        print("Please enter arguments.")
+        print("Please enter a Port number and a text file.")
+        exit()
+    if(len(sys.argv) == 2):
+        print("Please enter second argument.")
+        exit()
+    if(len(sys.argv) > 3):
+        print("Please enter the right amount of arguments.")
         exit()
 
-    # putting arguments into variable
+    # assigning arguments into variable
     print(sys.argv)
     port_number=sys.argv[1]
     file_board=sys.argv[2]
 
-
+    # import the board from file
     with open(file_board) as text:
         board = [list(line.strip()) for line in text]
 
@@ -71,13 +77,14 @@ def main():
         print(x)
 
     ##format to send the fire result
-    post_format = """   POST / HTTP/1.1
-                        Host: 127.0.0.1
-                        Content-Type: application/x-www-form-urlencoded
-                        Content-Length: 27
+    # post_format         POST / HTTP/1.1
+    #                     Host: 127.0.0.1
+    #                     Content-Type: application/x-www-form-urlencoded
+    #                     Content-Length: 27
+    #
+    #                     field1=value1&field2=value2
 
-                        field1=value1&field2=value2 """
-
+    # socket internet address family, with TCP. Binds with port number entered
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind (("127.0.0.1", (int(port_number))))
     s.listen(1)
@@ -85,12 +92,14 @@ def main():
         connection, address = s.accept()
         request = connection.recv(99999).decode("utf-8") # receives encoded message and decodes it to request
         print("request:", request)
-        if(request[0] == 'P'): # "for POST:" request[0] == 'P'
+        if(request[0] == 'P'):
             print("Request type: POST (supported)")
             print(request)
-            xcor = int(request[-5:-4])
+            xcor = int(request[-5:-4]) # get xcor and ycor from request message
             ycor = int(request[-1:])
 
+            # will need to revisit these responses:
+            # what does he mean by not formatted correctly?
             if xcor < 0 or ycor < 0:
                 connection.sendall(str.encode("HTTP/1.1 400 Bad Request\r\n\n"))
 
@@ -105,19 +114,22 @@ def main():
                 answer = "HTTP/1.1 200 OK\r\n\n" + r
                 connection.sendall(str.encode(answer))
 
-        elif(request[0] == 'G'): # for GET
-            space = request.find(" ", 5)
-            path = request[4:space]
+        elif(request[0] == 'G'): # for GET requests
+            space = request.find(" ", 5) # finds the second space in the request message
+            path = request[4:space] # gathers the path with the space index
+
+            # show all coordinates that have been fired on (client perspective)
             if (path == "/opponent_board.html"):
                 cont = "\n".join(['\t'.join([str(cell) for cell in row]) for row in records])
 
+            # not quite sure if this is correct yet. Requires comformation.
+            # show current state of the board (server perspective)
             elif (path == "/own_board.html"):
                 cont = "\n".join(['\t'.join([str(cell) for cell in row]) for row in board])
             else:
                 cont = "Path does not exit"
 
             print("Request type: GET (supported)")
-            # content = "HTTP/1.1 200 OK\r\n\n" +
             answer = "HTTP/1.1 200 OK\r\n\n" + cont
             connection.sendall(str.encode(answer))
 
