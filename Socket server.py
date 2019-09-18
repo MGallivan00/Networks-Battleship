@@ -1,9 +1,9 @@
 import socket
 import sys
 
-# TODO: Error in opponent_board
-# TODO: print statements clean up
-# TODO: error handling for arguments in terminal
+# TODO: Error in opponent_board [ALMOST FIXED!]
+# TODO: print statements clean up [ALMOST FIXED!]
+# TODO: error handling for arguments in terminal [FIXED!]
 # TODO: Add comments
 #       http://localhost:5000/opponent_board.html
 
@@ -11,35 +11,39 @@ import sys
 
 def result(x, y, board, records):
 
-    result = "null"
-    if board[x][y] != '_':
+    result = ""
+    records[x][y] = 'X'
+    if board[x][y] != '_': # if Hit
         print("Hit " + board[x][y] + "!")
         result = "hit=1"
         temp = board[x][y]
         board[x][y] = 'X'
-        records[x][y] = 'X'
-        if(not any(temp in sublist for sublist in board)):
+
+        if(not any(temp in sublist for sublist in board)): # check if boat sunk
             print("Sunk!")
             result += "\&sink=" + temp
     else:
         print("Miss!")
         result = "hit=0"
 
-    print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in board]))
-    print()
-    print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in records])) # error
+    for x in board:
+        print(x)
+    for x in records:
+        print(x)
+
+    # print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in records])) # error
 
     return result
 ##############
 
 def main():
 
-    #check for argument
-    if not (sys.argv[1]):
-        print("Usage 1 argument")
+    # check the len() of argument
+    if (len(sys.argv) == 1):
+        print("Please enter arguments.")
         exit()
 
-    #putting argument into variable
+    # putting arguments into variable
     print(sys.argv)
     port_number=sys.argv[1]
     file_board=sys.argv[2]
@@ -47,11 +51,19 @@ def main():
 
     with open(file_board) as text:
         board = [list(line.strip()) for line in text]
-        records = board # error
-        # join(['\t'.join([str(cell) for cell in row]) for row in records])
-    for row in records:
-        for cell in row:
-            cell = " "
+
+
+    # placeholder for the opponent_board array. Will fix this later
+    records = [['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
+    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_']]
 
     print("BattleShip game")
     print("Here is your board:\n")
