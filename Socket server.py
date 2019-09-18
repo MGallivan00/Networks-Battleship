@@ -6,7 +6,7 @@ import sys
 # TODO: error handling for arguments in terminal [DONE!]
 # TODO: Add comments [DONE!]
 # TODO: test if reponse is correctly formatted (wireshark)
-
+# TODO: 
 
 
 def result(x, y, board, records):
