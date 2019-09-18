@@ -14,8 +14,7 @@ def fire():
     xcor = sys.argv[3]
     ycor = sys.argv[4]
 
-
-    contentlength = 5+int(len(str(xcor)))+int(len(str(ycor)))
+    contentlength = 5+len(str(xcor))+len(str(ycor))
     content = "POST \nHost: " + HOST + "\nContent-Type: misc\nContent-Length: " + str(contentlength) + "\n\n" + "x=" + xcor + "&y=" + ycor
     print("\nContent that will be sent:\n" + content)
 
