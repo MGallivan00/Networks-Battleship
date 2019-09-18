@@ -5,7 +5,7 @@ import sys
 # TODO: print statements clean up [ALMOST DONE!]
 # TODO: error handling for arguments in terminal [DONE!]
 # TODO: Add comments [DONE!]
-
+# Trying to commit
 
 
 def result(x, y, board, records):
