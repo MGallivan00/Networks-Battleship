@@ -1,6 +1,10 @@
 import socket
 import sys
 
+# TODO: Error in opponent_board
+# TODO: print statements clean up
+# TODO: error handling for arguments in terminal
+# TODO: Add comments
 #       http://localhost:5000/opponent_board.html
 
 
@@ -23,7 +27,7 @@ def result(x, y, board, records):
 
     print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in board]))
     print()
-    print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in records]))
+    print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in records])) # error
 
     return result
 ##############
@@ -31,7 +35,7 @@ def result(x, y, board, records):
 def main():
 
     #check for argument
-    if not (sys.argv):
+    if not (sys.argv[1]):
         print("Usage 1 argument")
         exit()
 
@@ -43,7 +47,7 @@ def main():
 
     with open(file_board) as text:
         board = [list(line.strip()) for line in text]
-        records = board
+        records = board # error
         # join(['\t'.join([str(cell) for cell in row]) for row in records])
     for row in records:
         for cell in row:
