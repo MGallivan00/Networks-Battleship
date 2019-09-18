@@ -1,7 +1,6 @@
 import socket
 import sys
 
-# TODO: we need to format the sends and responses as HTTP POST and HTTP response
 #       http://localhost:5000/opponent_board.html
 
 
@@ -68,31 +67,31 @@ def main():
     s.listen(1)
     while True:
         connection, address = s.accept()
-        data = connection.recv(99999).decode("utf-8") # receives encoded message and decodes it to data
-        print("Data:", data)
-        if(data[0] == 'P'): # "for POST:" data[0] == 'P'
+        request = connection.recv(99999).decode("utf-8") # receives encoded message and decodes it to request
+        print("request:", request)
+        if(request[0] == 'P'): # "for POST:" request[0] == 'P'
             print("Request type: POST (supported)")
-            print(data)
-            xcor = int(data[-5:-4])
-            ycor = int(data[-1:])
+            print(request)
+            xcor = int(request[-5:-4])
+            ycor = int(request[-1:])
 
             if xcor < 0 or ycor < 0:
-                connection.sendall(str.encode("HTTP Bad Request"))
+                connection.sendall(str.encode("HTTP/1.1 400 Bad Request\r\n\n"))
 
             elif xcor > len(board) or ycor > len(board):
-                connection.sendall(str.encode("HTTP Not Found"))
+                connection.sendall(str.encode("HTTP/1.1 404 Not Found\r\n\n"))
 
             elif board[xcor][ycor] == 'X':
-                connection.sendall(str.encode("HTTP Gone"))
+                connection.sendall(str.encode("HTTP/1.1 410 Gone\r\n\n"))
 
             else:
                 r = result(xcor, ycor, board, records)
-                answer = data + r
+                answer = "HTTP/1.1 200 OK\r\n\n" + r
                 connection.sendall(str.encode(answer))
 
-        elif(data[0] == 'G'): # for GET
-            space = data.find(" ", 5)
-            path = data[4:space]
+        elif(request[0] == 'G'): # for GET
+            space = request.find(" ", 5)
+            path = request[4:space]
             if (path == "/opponent_board.html"):
                 cont = "\n".join(['\t'.join([str(cell) for cell in row]) for row in records])
 
@@ -101,7 +100,7 @@ def main():
             else:
                 cont = "Path does not exit"
 
-            print("Request type: GET (unsupported)")
+            print("Request type: GET (supported)")
             # content = "HTTP/1.1 200 OK\r\n\n" +
             answer = "HTTP/1.1 200 OK\r\n\n" + cont
             connection.sendall(str.encode(answer))

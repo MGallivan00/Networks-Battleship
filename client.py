@@ -14,15 +14,9 @@ def fire():
     xcor = sys.argv[3]
     ycor = sys.argv[4]
 
-    post_format = """   POST /test HTTP/1.1
-                        Host: 127.0.0.1
-                        Content-Type: application/x-www-form-urlencoded
-                        Content-Length: 27
-
-                        field1=value1&field2=value2 """
 
     contentlength = 5+int(len(str(xcor)))+int(len(str(ycor)))
-    content = "POST \nHost: " + HOST + "\nContent-Type: \nContent-Length: " + str(contentlength) + "\n\n" + "x=" + xcor + "&y=" + ycor
+    content = "POST \nHost: " + HOST + "\nContent-Type: misc\nContent-Length: " + str(contentlength) + "\n\n" + "x=" + xcor + "&y=" + ycor
     print(content)
     # content = "https://" + HOST + ":" + str(PORT) + "?x=" + xcor + "&y=" + ycor
 
