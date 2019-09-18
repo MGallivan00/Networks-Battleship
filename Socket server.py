@@ -6,7 +6,7 @@ import sys
 # TODO: error handling for arguments in terminal [DONE!]
 # TODO: Add comments [DONE!]
 # TODO: test if reponse is correctly formatted (wireshark)
-# TODO: ca marche?
+# TODO: argument that gets the opponent board
 
 
 def result(x, y, board, records):
@@ -71,6 +71,8 @@ def main():
     ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
     ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
     ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_']]
+
+
 
     print("BattleShip game")
     print("Here is your board:\n")
