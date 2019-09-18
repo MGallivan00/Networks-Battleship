@@ -21,7 +21,8 @@ def fire():
 
                         field1=value1&field2=value2 """
 
-    content = "POST \nHost: " + HOST + "\nContent-Type: \nContent-Length: \n\n" + "x=" + xcor + "&y=" + ycor
+    contentlength = 5+int(len(str(xcor)))+int(len(str(ycor)))
+    content = "POST \nHost: " + HOST + "\nContent-Type: \nContent-Length: " + str(contentlength) + "\n\n" + "x=" + xcor + "&y=" + ycor
     print(content)
     # content = "https://" + HOST + ":" + str(PORT) + "?x=" + xcor + "&y=" + ycor
 
