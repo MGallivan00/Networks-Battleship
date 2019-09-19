@@ -2,21 +2,19 @@
 import socket
 import sys
 
-if (len(sys.argv) == 1):
-    print("Please respect synthax python3 client.py address portnumber xcoordinate ycoordinate.")
-    exit()
-if(len(sys.argv) == 2):
-    print("Please enter 4 arguments.")
-    exit()
-if(len(sys.argv) == 3):
-    print("Please 4 arguments.")
-    exit()
-if(len(sys.argv) == 4):
-    print("Please  4 arguments.")
-    exit()
-if(len(sys.argv) > 5):
-    print("Please enter only 4 arguments.")
-    exit()
+
+
+def init():
+
+    if (len(sys.argv) == 1):
+        print("Please respect synthax python3 client.py address portnumber xcoordinate ycoordinate.")
+        exit()
+    if(len(sys.argv) > 1 and len(sys.argv) < 5):
+        print("Please enter 4 arguments.")
+        exit()
+    if(len(sys.argv) > 5):
+        print("Please enter only 4 arguments.")
+        exit()
 
 
 def fire():
@@ -40,4 +38,6 @@ def fire():
         msg = s.recv(1024)
         print('Received:', msg.decode("utf-8"))
 
+
+init()
 fire() # send fire coordinates to server
