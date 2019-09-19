@@ -121,6 +121,7 @@ def main():
             # show current state of the board (server perspective)
             elif (path == "/own_board.html"):
                 cont = "\n".join(['\t'.join([str(cell) for cell in row]) for row in board])
+                
             else:
                 cont = "Path does not exit"
 
