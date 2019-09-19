@@ -61,10 +61,10 @@ def main():
         print("Please enter a Port number and a text file.")
         exit()
     if(len(sys.argv) == 2):
-        print("Please enter second argument.")
+        print("Please enter a second argument.")
         exit()
     if(len(sys.argv) > 3):
-        print("Please enter the right amount of arguments.")
+        print("Please enter only 2 arguments.")
         exit()
 
     # assigning arguments into variable
