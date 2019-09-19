@@ -1,12 +1,9 @@
 import socket
 import sys
-import copy #add to import to actualy copy board and not to cross reference it when creating records (opponent board)
-# TODO: Error in opponent_board [ALMOST DONE!]
-# TODO: print statements clean up [ALMOST DONE!]
-# TODO: error handling for arguments in terminal [DONE!]
-# TODO: Add comments [DONE!]
-# TODO: test if reponse is correctly formatted (wireshark)
-# TODO: argument that gets the opponent board #opponent board fixed
+import copy
+# TODO: print statements clean up # Julian
+# TODO: Add comments # Julian
+# TODO: argument that gets the opponent board # Julian
 
 def printboard(board):
     cont = '<table style="border:1px solid black; width:50%;text-align:center">'
