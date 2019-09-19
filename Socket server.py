@@ -1,12 +1,12 @@
 import socket
 import sys
-
+import copy #add to import to actualy copy board and not to cross reference it when creating records (opponent board)
 # TODO: Error in opponent_board [ALMOST DONE!]
 # TODO: print statements clean up [ALMOST DONE!]
 # TODO: error handling for arguments in terminal [DONE!]
 # TODO: Add comments [DONE!]
 # TODO: test if reponse is correctly formatted (wireshark)
-# TODO: argument that gets the opponent board
+# TODO: argument that gets the opponent board #opponent board fixed
 
 
 def result(x, y, board, records):
@@ -26,10 +26,17 @@ def result(x, y, board, records):
         print("Miss!")
         result = "hit=0"
 
+
+
+
+    print("Here is your board:\n")
     for x in board:
         print(x)
+    print("\n")
+    print("Here is the record of the oponent attacks :\n")
     for x in records:
         print(x)
+    print("\n")
 
     # print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in records])) # error
 
@@ -39,7 +46,7 @@ def result(x, y, board, records):
 def main():
 
 
-    # checks if the length of arguments is correct
+    # checks if the number of arguments is correct
     if (len(sys.argv) == 1):
         print("Please enter a Port number and a text file.")
         exit()
@@ -58,25 +65,20 @@ def main():
     # import the board from file
     with open(file_board) as text:
         board = [list(line.strip()) for line in text]
-
-
-    # placeholder for the opponent_board array. Will fix this later
-    records = [['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
-    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
-    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
-    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
-    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
-    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
-    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
-    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
-    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_'],
-    ['_', '_', '_', '_', '_', '_', '_', '_', '_', '_']]
-
+    #create the record of hit (openent board) from the own board layout and empty it
+    records = copy.deepcopy(board)
+    for i in range(len(records)):
+            for j in range(len(records[i])):
+                       records[i][j]="_"
 
 
     print("BattleShip game")
     print("Here is your board:\n")
     for x in board:
+        print(x)
+    print("\n")
+    print("Here is the record of the oponent attacks :\n")
+    for x in records:
         print(x)
 
     ##format to send the fire result
