@@ -8,6 +8,19 @@ import copy #add to import to actualy copy board and not to cross reference it w
 # TODO: test if reponse is correctly formatted (wireshark)
 # TODO: argument that gets the opponent board #opponent board fixed
 
+def printboard(board):
+    cont = '<table style="border:1px solid black; width:50%;text-align:center">'
+    for i in range(len(board)):
+        cont += '<tr style="border:1px solid black;height:50%; text-align:center">'
+        for j in range(len(board[i])):
+            cont += '<td style="border:1px solid black;height:50%; text-align:center">'
+            cont += board[i][j]
+            cont += "</td>"
+        cont +="</tr>"
+    cont += "</table>"
+    return cont
+
+
 
 def result(x, y, board, records):
 
@@ -115,13 +128,13 @@ def main():
 
             # show all coordinates that have been fired on (client perspective)
             if (path == "/opponent_board.html"):
-                cont = "\n".join(['\t'.join([str(cell) for cell in row]) for row in records])
-
+                #cont = "\n".join(['\t'.join([str(cell) for cell in row]) for row in records])
+                cont = printboard(board)
             # not quite sure if this is correct yet. Requires comformation.
             # show current state of the board (server perspective)
             elif (path == "/own_board.html"):
-                cont = "\n".join(['\t'.join([str(cell) for cell in row]) for row in board])
-                
+                #cont = "\n".join(['\t'.join([str(cell) for cell in row]) for row in board])
+                cont = printboard(board)
             else:
                 cont = "Path does not exit"
 
