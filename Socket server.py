@@ -68,8 +68,8 @@ def main():
     #create the record of hit (openent board) from the own board layout and empty it
     records = copy.deepcopy(board)
     for i in range(len(records)):
-            for j in range(len(records[i])):
-                       records[i][j]="_"
+        for j in range(len(records[i])):
+            records[i][j]="_"
 
 
     print("BattleShip game")
@@ -81,13 +81,6 @@ def main():
     for x in records:
         print(x)
 
-    ##format to send the fire result
-    # post_format         POST / HTTP/1.1
-    #                     Host: 127.0.0.1
-    #                     Content-Type: application/x-www-form-urlencoded
-    #                     Content-Length: 27
-    #
-    #                     field1=value1&field2=value2
 
     # socket internet address family, with TCP. Binds with port number entered
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -105,10 +98,7 @@ def main():
 
             # will need to revisit these responses:
             # what does he mean by not formatted correctly?
-            if xcor < 0 or ycor < 0:
-                connection.sendall(str.encode("HTTP/1.1 400 Bad Request\r\n\n"))
-
-            elif xcor > len(board) or ycor > len(board):
+            if xcor > len(board) or ycor > len(board) or xcor < 0 or ycor < 0:
                 connection.sendall(str.encode("HTTP/1.1 404 Not Found\r\n\n"))
 
             elif board[xcor][ycor] == 'X':
@@ -138,8 +128,11 @@ def main():
             answer = "HTTP/1.1 200 OK\r\n\n" + cont
             connection.sendall(str.encode(answer))
 
+        else:
+            connection.sendall(str.encode("HTTP/1.1 400 Bad Request\r\n\n"))
 
         connection.close()
+
     #### END While loop
 
     s.close()
