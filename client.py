@@ -4,7 +4,7 @@ import sys
 
 
 
-def init():
+def init(): # checks if number of arguments are valid
 
     if (len(sys.argv) == 1):
         print("Please respect synthax python3 client.py address portnumber xcoordinate ycoordinate.")
