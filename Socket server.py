@@ -77,8 +77,8 @@ def result(x, y, board, records):
 
 def endgame(board):
     # need to find a way to end the game...
-    if(not any('D' in sublist for sublist in board) or not any('C' in sublist for sublist in board) or
-    not any('S' in sublist for sublist in board) or not any('R' in sublist for sublist in board) or
+    if(not any('D' in sublist for sublist in board) and not any('C' in sublist for sublist in board) and
+    not any('S' in sublist for sublist in board) and not any('R' in sublist for sublist in board) and
     not any('B' in sublist for sublist in board)):
         print("\n\nThe opponent knocked down all ships! The opponent wins!")
         print("Thank you for playing our game! To play again please restart the server.\n")
