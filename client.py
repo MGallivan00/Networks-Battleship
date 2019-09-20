@@ -36,7 +36,13 @@ def fire():
         s.connect((HOST, PORT))
         s.sendall(str.encode(content))
         msg = s.recv(1024)
-        print('Received:', msg.decode("utf-8"))
+        message = msg.decode("utf-8")
+        print('Response received.')
+        if(message[-3:] == "win"):
+            print("\n\nYou destroyed all ships! You Won!")
+            print("Thank you for playing our game!")
+            print("The server has shut down.\n")
+
 
 
 init()

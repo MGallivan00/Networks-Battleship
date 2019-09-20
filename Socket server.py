@@ -75,6 +75,17 @@ def result(x, y, board, records):
 
     return result
 
+def endgame(board):
+    # need to find a way to end the game...
+    if(not any('D' in sublist for sublist in board) or not any('C' in sublist for sublist in board) or
+    not any('S' in sublist for sublist in board) or not any('R' in sublist for sublist in board) or
+    not any('B' in sublist for sublist in board)):
+        print("\n\nThe opponent knocked down all ships! The opponent wins!")
+        print("Thank you for playing our game! To play again please restart the server.\n")
+        return "win"
+    else:
+        return ""
+
 
 def main():
     init()
@@ -106,6 +117,7 @@ def main():
     s.bind (("127.0.0.1", (int(port_number))))
     s.listen(1)
     while True:
+        win = ""
         connection, address = s.accept()
         request = connection.recv(99999).decode("utf-8") # receives encoded message and decodes it to request
 
@@ -123,7 +135,11 @@ def main():
 
             else:
                 r = result(xcor, ycor, board, records)
-                answer = "HTTP/1.1 200 OK\r\n\n" + r
+                win = endgame(board)
+                if(win == "win"):
+                    answer = "HTTP/1.1 200 OK\r\n\n" + win
+                else:
+                    answer = "HTTP/1.1 200 OK\r\n\n" + r
                 connection.sendall(str.encode(answer))
 
         elif(request[0] == 'G'): # for GET requests
@@ -149,6 +165,8 @@ def main():
             connection.sendall(str.encode("HTTP/1.1 400 Bad Request\r\n\n"))
 
         connection.close()
+        if(win == "win"):
+            break;
 
     #### END While loop
 
