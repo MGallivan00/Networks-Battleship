@@ -1,7 +1,7 @@
 # CSCI 466 PA1 - Battleship Network Application 
 
 ## Instructions
-### Due: 9/24/17 11:59PM
+### Due: 9/23/19 11:59PM
 
 
 Complete the following assignment in pairs, or groups of three. 
