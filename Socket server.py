@@ -149,7 +149,7 @@ def main():
 
             # show all coordinates that have been fired on (client perspective)
             if (path == "/opponent_board.html"):
-                cont = printboard(board)
+                cont = printboard(records)
 
             # show current state of the board (server perspective)
             elif (path == "/own_board.html"):
