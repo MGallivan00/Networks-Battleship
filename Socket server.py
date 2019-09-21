@@ -165,11 +165,12 @@ def main():
                 cont = printboard(board, False)
             elif (path == "/game.html"):
                 cont = printboard(board, True)
-            else:
+            else: #should be elif with regex
                 print(path[-1])
                 print(path[-2])
-                cont = "Path does not exit"
-
+                result(int(path[-2]),int(path[-1]), board, records)
+                cont = printboard(board, True)
+            # should be else hereelse:
             answer = "HTTP/1.1 200 OK\r\n\n" + cont
             connection.sendall(str.encode(answer))
 
