@@ -18,16 +18,27 @@ def init(): # checks if the number of arguments is correct
         exit()
 
 
-def printboard(board): # prints the board on the browser (uses HTML/CSS)
-    cont = '<table style="border:1px solid black; width:50%;text-align:center">'
-    for i in range(len(board)):
-        cont += '<tr style="border:1px solid black;height:50%; text-align:center">'
-        for j in range(len(board[i])):
-            cont += '<td style="border:1px solid black;height:50%; text-align:center">'
-            cont += board[i][j]
-            cont += "</td>"
-        cont +="</tr>"
-    cont += "</table>"
+def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
+    if (game == False):
+        cont = '<table style="border:1px solid black; width:50%;text-align:center">'
+        for i in range(len(board)):
+            cont += '<tr style="border:1px solid black;height:50%; text-align:center">'
+            for j in range(len(board[i])):
+                cont += '<td style="border:1px solid black;height:50%; text-align:center">'
+                cont += board[i][j]
+                cont += "</td>"
+            cont +="</tr>"
+        cont += "</table>"
+    elif (game == True):
+        cont = '<table style="border:1px solid black; width:50%;text-align:center">'
+        for i in range(len(board)):
+            cont += '<tr style="border:1px solid black;height:50%; text-align:center">'
+            for j in range(len(board[i])):
+                cont += '<td style="border:1px solid black;height:50%; text-align:center">'
+                cont += '<a href=http://127.0.0.1:8080/game.html/'+str(i)+str(j)+'>Attack</a>'
+                cont += "</td>"
+            cont +="</tr>"
+        cont += "</table>"
     return cont
 
 def pboard(board):
@@ -146,16 +157,17 @@ def main():
             print("(Request type: GET (supported))")
             space = request.find(" ", 5) # finds the second space in the request message
             path = request[4:space] # gathers the path with the space index
-
             # show all coordinates that have been fired on (client perspective)
             if (path == "/opponent_board.html"):
-                cont = printboard(records)
-
+                cont = printboard(records, False)
             # show current state of the board (server perspective)
             elif (path == "/own_board.html"):
-                cont = printboard(board)
-
+                cont = printboard(board, False)
+            elif (path == "/game.html"):
+                cont = printboard(board, True)
             else:
+                print(path[-1])
+                print(path[-2])
                 cont = "Path does not exit"
 
             answer = "HTTP/1.1 200 OK\r\n\n" + cont
