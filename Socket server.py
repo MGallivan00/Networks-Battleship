@@ -17,7 +17,9 @@ def init(): # checks if the number of arguments is correct
         print("Please enter only 2 arguments.")
         exit()
 
-
+def winpage():
+    cont= "You Win"
+    return cont
 def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
     if (game == False):
         cont = '<table style="border:1px solid black; width:50%;text-align:center">'
@@ -35,7 +37,10 @@ def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
             cont += '<tr style="border:1px solid black;height:50%; text-align:center">'
             for j in range(len(board[i])):
                 cont += '<td style="border:1px solid black;height:50%; text-align:center">'
-                cont += '<a href=http://127.0.0.1:8080/game.html/'+str(i)+str(j)+'>Attack</a>'
+                if (board[i][j] != 'X'):
+                    cont += '<a href=http://127.0.0.1:8080/game.html/'+str(i)+str(j)+'>Attack</a>'
+                else:
+                    cont += '<a href=http://127.0.0.1:8080/game.html/'+str(i)+str(j)+'>Already shot</a>'
                 cont += "</td>"
             cont +="</tr>"
         cont += "</table>"
@@ -158,19 +163,29 @@ def main():
             space = request.find(" ", 5) # finds the second space in the request message
             path = request[4:space] # gathers the path with the space index
             # show all coordinates that have been fired on (client perspective)
-            if (path == "/opponent_board.html"):
+            if (path == "/opponent_board.html" or path == "/opponent_board.html/"):
                 cont = printboard(records, False)
             # show current state of the board (server perspective)
-            elif (path == "/own_board.html"):
+            elif (path == "/own_board.html" or path == "/own_board.html/"):
                 cont = printboard(board, False)
-            elif (path == "/game.html"):
+            elif (path == "/game.html" or path == "/game.html/"):
                 cont = printboard(board, True)
-            else: #should be elif with regex
+            else:
+            #elif (path[1:11] == "/game.html/" and (path[12:13] == "^[0-9]+$")):
                 print(path[-1])
                 print(path[-2])
-                result(int(path[-2]),int(path[-1]), board, records)
-                cont = printboard(board, True)
-            # should be else hereelse:
+                hit = result(int(path[-2]),int(path[-1]), board, records)
+                win = endgame(board)
+                if(win == "win"):
+                    cont = winpage()
+                else:
+                    cont = printboard(records, True)
+                    if (hit == "hit=1"):
+                        cont += "You hit !"
+                    else:
+                        cont += "You Miss !"
+            #else:
+                #non existent path
             answer = "HTTP/1.1 200 OK\r\n\n" + cont
             connection.sendall(str.encode(answer))
 
