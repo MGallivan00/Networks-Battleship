@@ -173,7 +173,7 @@ def main():
             else:
             #elif (path[1:11] == "/game.html/" and (path[12:13] == "^[0-9]+$")):
                 print(path[-1])
-                print(path[-2])
+                print(path[-2]) 
                 hit = result(int(path[-2]),int(path[-1]), board, records)
                 win = endgame(board)
                 if(win == "win"):

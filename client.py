@@ -26,7 +26,7 @@ def fire():
     HOST = sys.argv[1]
     PORT = int(sys.argv[2])
     xcor = sys.argv[3]
-    ycor = sys.argv[4]
+    ycor = sys.argv[4] 
 
     contentlength = 5+len(str(xcor))+len(str(ycor))
     content = "POST \nHost: " + HOST + "\nContent-Type: misc\nContent-Length: " + str(contentlength) + "\n\n" + "x=" + xcor + "&y=" + ycor
