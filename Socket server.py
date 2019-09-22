@@ -169,11 +169,12 @@ def main():
             elif (path == "/own_board.html" or path == "/own_board.html/"):
                 cont = printboard(board, False)
             elif (path == "/game.html" or path == "/game.html/"):
+                print("web client start")
                 cont = printboard(board, True)
-            else:
-            #elif (path[1:11] == "/game.html/" and (path[12:13] == "^[0-9]+$")):
+            elif (path[0:10] == "/game.html" and isinstance(int(path[-1]), int) and isinstance(int(path[-2]), int)):
+                print("web client attack")
                 print(path[-1])
-                print(path[-2]) 
+                print(path[-2])
                 hit = result(int(path[-2]),int(path[-1]), board, records)
                 win = endgame(board)
                 if(win == "win"):
@@ -184,8 +185,8 @@ def main():
                         cont += "You hit !"
                     else:
                         cont += "You Miss !"
-            #else:
-                #non existent path
+            else:
+                cont = "non existent path"
             answer = "HTTP/1.1 200 OK\r\n\n" + cont
             connection.sendall(str.encode(answer))
 
