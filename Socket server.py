@@ -80,7 +80,7 @@ def result(x, y, board, records):
             result += "\&sink=" + temp
     else:
         print("The opponent fired and it missed!")
-        result = "hit=0" + temp
+        result = "hit=0" + 'M'
 
     print("\nThis is the current state of your board:\n")
     pboard(board)
