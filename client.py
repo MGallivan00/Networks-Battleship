@@ -16,6 +16,21 @@ def init(): # checks if number of arguments are valid
         print("Please enter only 4 arguments.")
         exit()
 
+def boatcheck(boat):
+    b = ""
+    if(boat == 'D'):
+        b = "Destroyer"
+    elif(boat == 'B'):
+        b = "Battleship"
+    elif(boat == 'C'):
+        b = "Carrier"
+    elif(boat == 'R'):
+        b = "Cruiser"
+    else:
+        b = "Submarine"
+
+    return b
+
 
 def fire():
 
@@ -26,7 +41,7 @@ def fire():
     HOST = sys.argv[1]
     PORT = int(sys.argv[2])
     xcor = sys.argv[3]
-    ycor = sys.argv[4] 
+    ycor = sys.argv[4]
 
     contentlength = 5+len(str(xcor))+len(str(ycor))
     content = "POST \nHost: " + HOST + "\nContent-Type: misc\nContent-Length: " + str(contentlength) + "\n\n" + "x=" + xcor + "&y=" + ycor
@@ -37,11 +52,38 @@ def fire():
         s.sendall(str.encode(content))
         msg = s.recv(1024)
         message = msg.decode("utf-8")
-        print('Response received.')
+        print("\n\nMessage: " + message)
+
         if(message[-3:] == "win"):
             print("\n\nYou destroyed all ships! You Won!")
             print("Thank you for playing our game!")
             print("The server has shut down.\n")
+            exit()
+
+        code = message[9:12]
+        print("Message: " + message[-2:])
+        if(code == "200"): # OK
+            if(message[-6:-2] == "sink"):
+                print("You hit and sunk a " + boatcheck(message[-1:]) + "!")
+            elif(message[-2:-1] == "1"):
+                print("You hit a " + boatcheck(message[-1:]) + "!")
+            else:
+                print("You missed your shot!")
+
+        elif(code == "404"): # NOT FOUND
+            print("You need to ender coordinates on the board!")
+
+        elif(code == "410"): # DONE
+            print("You already hit this location!")
+
+        else: # BAD REQUEST
+            print("Something went wrong... \n(Error 400)\n")
+
+
+        print('Response received.')
+
+
+
 
 
 

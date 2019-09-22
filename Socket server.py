@@ -20,8 +20,6 @@ def init(): # checks if the number of arguments is correct
 def winpage():
     cont= "You Win"
     return cont
-
-
 def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
     if (game == False):
         cont = '<table style="border:1px solid black; width:50%;text-align:center">'
@@ -40,15 +38,15 @@ def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
             for j in range(len(board[i])):
                 cont += '<td style="border:1px solid black;height:50%; text-align:center">'
                 if (board[i][j] != 'X'):
-                    cont += '<a style="text-decoration: none;" href=http://127.0.0.1:8080/game.html/'+str(i)+str(j)+'>Attack</a>'
+                    cont += '<a href=http://127.0.0.1:8080/game.html/'+str(i)+str(j)+'>Attack</a>'
                 else:
-                    cont += '<a style="text-decoration: none; color: red; href=http://127.0.0.1:8080/game.html/'+str(i)+str(j)+'>Already shot</a>'
+                    cont += '<a href=http://127.0.0.1:8080/game.html/'+str(i)+str(j)+'>Already shot</a>'
                 cont += "</td>"
             cont +="</tr>"
         cont += "</table>"
     return cont
 
-def pboard(board): # prints in terminal
+def pboard(board):
     for x in board:
         print(x)
 
@@ -74,7 +72,7 @@ def result(x, y, board, records):
     if board[x][y] != '_': # if Hit
         temp = board[x][y]
         print("The opponent fired and it hit a " + boatcheck(temp) + "!")
-        result = "hit=1"
+        result = "hit=1" + temp
         board[x][y] = 'X'
 
         if(not any(temp in sublist for sublist in board)): # check if boat sunk
@@ -82,7 +80,7 @@ def result(x, y, board, records):
             result += "\&sink=" + temp
     else:
         print("The opponent fired and it missed!")
-        result = "hit=0"
+        result = "hit=0" + temp
 
     print("\nThis is the current state of your board:\n")
     pboard(board)
@@ -183,7 +181,7 @@ def main():
                     cont = winpage()
                 else:
                     cont = printboard(records, True)
-                    if (hit == "hit=1"):
+                    if (hit[:-1] == "hit=1"):
                         cont += "You hit !"
                     else:
                         cont += "You Miss !"
