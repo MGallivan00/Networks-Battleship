@@ -20,6 +20,8 @@ def init(): # checks if the number of arguments is correct
 def winpage():
     cont= "You Win"
     return cont
+
+
 def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
     if (game == False):
         cont = '<table style="border:1px solid black; width:50%;text-align:center">'
@@ -38,15 +40,15 @@ def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
             for j in range(len(board[i])):
                 cont += '<td style="border:1px solid black;height:50%; text-align:center">'
                 if (board[i][j] != 'X'):
-                    cont += '<a href=http://127.0.0.1:8080/game.html/'+str(i)+str(j)+'>Attack</a>'
+                    cont += '<a style="text-decoration: none;" href=http://127.0.0.1:8080/game.html/'+str(i)+str(j)+'>Attack</a>'
                 else:
-                    cont += '<a href=http://127.0.0.1:8080/game.html/'+str(i)+str(j)+'>Already shot</a>'
+                    cont += '<a style="text-decoration: none; color: red; href=http://127.0.0.1:8080/game.html/'+str(i)+str(j)+'>Already shot</a>'
                 cont += "</td>"
             cont +="</tr>"
         cont += "</table>"
     return cont
 
-def pboard(board):
+def pboard(board): # prints in terminal
     for x in board:
         print(x)
 
