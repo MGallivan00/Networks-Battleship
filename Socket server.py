@@ -29,7 +29,7 @@ body {
   font-family: georgia, serif;
   font-size: x-large;
   color:#ff9900;
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/e/ea/BB61_USS_Iowa_BB61_broadside_USN.jpg");
+  background-image: url("https://nationalinterest.org/sites/default/files/styles/desktop__1260_/public/main_images/uss_new_jersey_6219214852_0.jpg?itok=iGTZnCsr");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -48,7 +48,7 @@ body {
   font-family: georgia, serif;
   font-size: x-large;
   color:#ff9900;
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/e/ea/BB61_USS_Iowa_BB61_broadside_USN.jpg");
+  background-image: url("https://nationalinterest.org/sites/default/files/styles/desktop__1260_/public/main_images/uss_new_jersey_6219214852_0.jpg?itok=iGTZnCsr");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
