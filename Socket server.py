@@ -75,9 +75,6 @@ def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
                 cont += "</td>"
             cont +="</tr>"
         cont += "</table>"
-    cont += "</body>"
-
-
     else: # changes the board as the user attack
         cont += '<div class="center"><table ' + style
         for i in range(len(board)):
