@@ -17,13 +17,20 @@ def init(): # checks if the number of arguments is correct
         print("Please enter only 2 arguments.")
         exit()
 
+
 def winpage():
-    cont = "YOU WIN!\nYou knocked down all ships!\nThank you for playing our game!\nTo play again please restart the server.\n"
-    return cont
+    html = """<html><head><title>Battleship</title></head><body>
+    <div style="display:inline-flex;justify-content:center;align-items:center;width:100vw;height:100vh;
+    text-align: center;"><h2>You Won!<br>You knocked down all ships!<br>
+    Thank you for playing our game!<br>To play again please restart the server.
+    </h2></div></body?</html>"""
+    return html
+
 
 def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
-    style = 'style="border:1px solid black; width:75%; height:50%; text-align:center">' # styling of the board
-    link = '<a href=http://127.0.0.1:8080/game.html/'
+    style = 'style="border:1px solid black; width:50%; text-align:center">' # styling of the board
+    link = '<a style="text-decoration:none;color:black;"href=http://127.0.0.1:8080/game.html/'
+    hitlink = '<a style="text-decoration:none;color:red;"href=http://127.0.0.1:8080/game.html/'
 
     if (game == False):
         cont = '<table ' + style
@@ -45,7 +52,7 @@ def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
                 if (board[i][j] != 'X'):
                     cont += link + str(i) + str(j) + '>Attack</a>'
                 else:
-                    cont += link + str(i) + str(j) + '>Already shot</a>'
+                    cont += hitlink + str(i) + str(j) + '>Shot</a>'
                 cont += "</td>"
             cont +="</tr>"
         cont += "</table>"
@@ -171,29 +178,36 @@ def main():
             print("(Request type: GET (supported))")
             space = request.find(" ", 5) # finds the second space in the request message
             path = request[4:space] # gathers the path with the space index
+
             # show all coordinates that have been fired on (client perspective)
             if (path == "/opponent_board.html" or path == "/opponent_board.html/"):
                 cont = printboard(records, False)
+
             # show current state of the board (server perspective)
             elif (path == "/own_board.html" or path == "/own_board.html/"):
                 cont = printboard(board, False)
+
             elif (path == "/game.html" or path == "/game.html/"):
                 print("web client start")
                 cont = printboard(board, True)
+
             elif (path[0:10] == "/game.html" and isinstance(int(path[-1]), int) and isinstance(int(path[-2]), int)):
                 print("web client attack")
                 print(path[-1])
                 print(path[-2])
                 hit = result(int(path[-2]),int(path[-1]), board, records)
                 win = checkEndGame(board)
+
                 if(win == "win"):
                     cont = winpage()
+
                 else:
                     cont = printboard(records, True)
                     if (hit[:-1] == "hit=1"):
-                        cont += "You hit !"
+                        cont += "You hit!"
                     else:
-                        cont += "You Miss !"
+                        cont += "You missed!"
+
             else:
                 cont = "non existent path"
             answer = "HTTP/1.1 200 OK\r\n\n" + cont
