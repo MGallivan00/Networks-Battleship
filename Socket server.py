@@ -19,11 +19,11 @@ def init(): # checks if the number of arguments is correct
 
 
 def winpage(): # formats the win page to be slightly more exciting
-    html = """<html><head><title>Battleship</title></head><body>
+    html = """<!DOCTYPE html><html><head><title>Battleship</title></head><body>
     <div style="display:inline-flex;justify-content:center;align-items:center;width:100vw;height:100vh;
     text-align: center;"><h2>You Won!<br>You knocked down all ships!<br>
     Thank you for playing our game!<br>To play again please restart the server.
-    </h2></div></body?</html>"""
+    </h2></div></body></html>"""
     return html
 
 
@@ -31,9 +31,21 @@ def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
     style = 'style="border:1px solid black; width:50%; text-align:center">' # styling of the board
     link = '<a style="text-decoration:none;color:black;"href=http://127.0.0.1:8080/game.html/'
     hitlink = '<a style="text-decoration:none;color:red;"href=http://127.0.0.1:8080/game.html/'
-
+    css = """<style type="text/css">
+body {
+  font-family: georgia, serif;
+  font-size: x-large;
+  color:#ff9900;
+  }
+a:hover {
+  color: LimeGreen;
+  text-decoration: none;
+  }
+</style>"""
+    cont = "<!DOCTYPE html><html><head><title>Battleship</title></head><body>"
+    cont += css
     if (game == False):
-        cont = '<table ' + style
+        cont += '<table ' + style
         for i in range(len(board)):
             cont += '<tr ' + style
             for j in range(len(board[i])):
@@ -44,7 +56,7 @@ def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
         cont += "</table>"
 
     else: # changes the board as the user attack
-        cont = '<table ' + style
+        cont += '<table ' + style
         for i in range(len(board)):
             cont += '<tr ' + style
             for j in range(len(board[i])):
@@ -56,6 +68,7 @@ def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
                 cont += "</td>"
             cont +="</tr>"
         cont += "</table>"
+    cont += "</body></html>"
     return cont
 
 def pboard(board):
