@@ -18,29 +18,34 @@ def init(): # checks if the number of arguments is correct
         exit()
 
 def winpage():
-    cont= "YOU WIN!\nYou knocked down all ships!\nThank you for playing our game!\nTo play again please restart the server.\n"
+    cont = "YOU WIN!\nYou knocked down all ships!\nThank you for playing our game!\nTo play again please restart the server.\n"
     return cont
+
 def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
+    style = 'style="border:1px solid black; width:75%; height:50%; text-align:center">' # styling of the board
+    link = '<a href=http://127.0.0.1:8080/game.html/'
+
     if (game == False):
-        cont = '<table style="border:1px solid black; width:50%;text-align:center">'
+        cont = '<table ' + style
         for i in range(len(board)):
-            cont += '<tr style="border:1px solid black;height:50%; text-align:center">'
+            cont += '<tr ' + style
             for j in range(len(board[i])):
-                cont += '<td style="border:1px solid black;height:50%; text-align:center">'
+                cont += '<td ' + style
                 cont += board[i][j]
                 cont += "</td>"
             cont +="</tr>"
         cont += "</table>"
-    elif (game == True):
-        cont = '<table style="border:1px solid black; width:50%;text-align:center">'
+
+    else:
+        cont = '<table ' + style
         for i in range(len(board)):
-            cont += '<tr style="border:1px solid black;height:50%; text-align:center">'
+            cont += '<tr ' + style
             for j in range(len(board[i])):
-                cont += '<td style="border:1px solid black;height:50%; text-align:center">'
+                cont += '<td ' + style
                 if (board[i][j] != 'X'):
-                    cont += '<a href=http://127.0.0.1:8080/game.html/'+str(i)+str(j)+'>Attack</a>'
+                    cont += link + str(i) + str(j) + '>Attack</a>'
                 else:
-                    cont += '<a href=http://127.0.0.1:8080/game.html/'+str(i)+str(j)+'>Already shot</a>'
+                    cont += link + str(i) + str(j) + '>Already shot</a>'
                 cont += "</td>"
             cont +="</tr>"
         cont += "</table>"
@@ -50,20 +55,20 @@ def pboard(board):
     for x in board:
         print(x)
 
-def boatcheck(boat):
-    b = ""
-    if(boat == 'D'):
-        b = "Destroyer"
-    elif(boat == 'B'):
-        b = "Battleship"
-    elif(boat == 'C'):
-        b = "Carrier"
-    elif(boat == 'R'):
-        b = "Cruiser"
+def boatcheck(b):
+    boat = ""
+    if(b == 'D'):
+        boat = "Destroyer"
+    elif(b == 'B'):
+        boat = "Battleship"
+    elif(b == 'C'):
+        boat = "Carrier"
+    elif(b == 'R'):
+        boat = "Cruiser"
     else:
-        b = "Submarine"
+        boat = "Submarine"
 
-    return b
+    return boat
 
 def result(x, y, board, records):
 
@@ -89,7 +94,7 @@ def result(x, y, board, records):
 
     return result
 
-def endgame(board):
+def checkEndGame(board):
     # need to find a way to end the game...
     if(not any('D' in sublist for sublist in board) and not any('C' in sublist for sublist in board) and
     not any('S' in sublist for sublist in board) and not any('R' in sublist for sublist in board) and
@@ -117,14 +122,12 @@ def main():
         for j in range(len(records[i])):
             records[i][j]="_"
 
-
     print("\n\tWelcome to Battleship! Let's start the game.\n")
     print("This is the current state of your board:\n")
     pboard(board)
     print("\nHere is the record of your opponent's attacks:\n")
     pboard(records)
     print("\nWaiting for opponent to fire...\n")
-
 
     # socket internet address family, with TCP. Binds with port number entered
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -142,22 +145,22 @@ def main():
             xcor = request[equals+1:amp]
             ycor = request[amp+3:]
 
-            if not xcor.isdigit() or not ycor.isdigit():
+            if not xcor.isdigit() or not ycor.isdigit(): # if x or y is not a number
                 connection.sendall(str.encode("HTTP/1.1 400 Bad Request\r\n\n"))
                 continue
 
             xcor = int(xcor)
             ycor = int(ycor)
 
-            if xcor > len(board) or ycor > len(board) or xcor < 0 or ycor < 0:
+            if xcor > len(board) or ycor > len(board) or xcor < 0 or ycor < 0: # if out of bounds
                 connection.sendall(str.encode("HTTP/1.1 404 Not Found\r\n\n"))
 
-            elif board[xcor][ycor] == 'X':
+            elif board[xcor][ycor] == 'X': # already hit
                 connection.sendall(str.encode("HTTP/1.1 410 Gone\r\n\n"))
 
-            else:
+            else: # if successful (no errors)
                 r = result(xcor, ycor, board, records)
-                win = endgame(board)
+                win = checkEndGame(board)
                 if(win == "win"):
                     answer = "HTTP/1.1 200 OK\r\n\n" + win
                 else:
@@ -182,7 +185,7 @@ def main():
                 print(path[-1])
                 print(path[-2])
                 hit = result(int(path[-2]),int(path[-1]), board, records)
-                win = endgame(board)
+                win = checkEndGame(board)
                 if(win == "win"):
                     cont = winpage()
                 else:
