@@ -15,7 +15,7 @@ def init(): # checks if number of arguments are valid
     if(len(sys.argv) > 5):
         print("Please enter only 4 arguments.")
         exit()
-    if(isinstance(int(sys.argv[3]), int) and isinstance(int(sys.argv[4]), int)):
+    if(not isinstance(int(sys.argv[3]), int) and (not isinstance(int(sys.argv[4]), int))):
         print("d")
         exit()
 

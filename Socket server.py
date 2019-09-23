@@ -18,7 +18,7 @@ def init(): # checks if the number of arguments is correct
         exit()
 
 def winpage():
-    cont= "You Win"
+    cont= "YOU WIN!\nYou knocked down all ships!\nThank you for playing our game!\nTo play again please restart the server.\n"
     return cont
 def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
     if (game == False):
@@ -139,9 +139,17 @@ def main():
 
         if(request[0] == 'P'):
             print("(Request type: POST (supported))")
-            # print(request)
-            xcor = int(request[-5:-4]) # get xcor and ycor from request message
-            ycor = int(request[-1:])
+            equals = request.find('=') # index foe first '='
+            amp = request.find('&')
+            xcor = request[equals+1:amp]
+            ycor = request[amp+3:]
+
+            if not xcor.isdigit() or not ycor.isdigit():
+                connection.sendall(str.encode("HTTP/1.1 400 Bad Request\r\n\n"))
+                continue
+
+            xcor = int(xcor)
+            ycor = int(ycor)
 
             if xcor > len(board) or ycor > len(board) or xcor < 0 or ycor < 0:
                 connection.sendall(str.encode("HTTP/1.1 404 Not Found\r\n\n"))
@@ -190,8 +198,7 @@ def main():
             answer = "HTTP/1.1 200 OK\r\n\n" + cont
             connection.sendall(str.encode(answer))
 
-        else:
-            connection.sendall(str.encode("HTTP/1.1 400 Bad Request\r\n\n"))
+
 
         connection.close()
         if(win == "win"):
