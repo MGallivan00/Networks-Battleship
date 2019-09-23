@@ -40,24 +40,33 @@ body {
 
 
 def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
-    style = 'style="border:1px solid black; width:50%; text-align:center">' # styling of the board
+    style = 'style="border:1px solid black; width:50%; text-align:center";>' # styling of the board
     link = '<a style="text-decoration:none;color:black;"href=http://127.0.0.1:8080/game.html/'
     hitlink = '<a style="text-decoration:none;color:red;"href=http://127.0.0.1:8080/game.html/'
     css = """<style type="text/css">
-body {
-  font-family: georgia, serif;
-  font-size: x-large;
-  color:#ff9900;
-  background-image: url("https://nationalinterest.org/sites/default/files/styles/desktop__1260_/public/main_images/uss_new_jersey_6219214852_0.jpg?itok=iGTZnCsr");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  }
-</style>"""
+    body {
+      font-family: georgia, serif;
+      font-size: x-large;
+      color:#ff9900;
+      background-image: url("https://nationalinterest.org/sites/default/files/styles/desktop__1260_/public/main_images/uss_new_jersey_6219214852_0.jpg?itok=iGTZnCsr");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .center {
+        display: flex-inline;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    </style>"""
+
     cont = "<!DOCTYPE html><html><head><title>Battleship</title></head><body>"
     cont += css
     if (game == False):
-        cont += '<table ' + style
+        cont += '<div class="center"><table ' + style
         for i in range(len(board)):
             cont += '<tr ' + style
             for j in range(len(board[i])):
@@ -65,10 +74,10 @@ body {
                 cont += board[i][j]
                 cont += "</td>"
             cont +="</tr>"
-        cont += "</table>"
+        cont += "</table></div>"
 
     else: # changes the board as the user attack
-        cont += '<table ' + style
+        cont += '<div class="center"><table ' + style
         for i in range(len(board)):
             cont += '<tr ' + style
             for j in range(len(board[i])):
@@ -79,7 +88,7 @@ body {
                     cont += hitlink + str(i) + str(j) + '>Shot</a>'
                 cont += "</td>"
             cont +="</tr>"
-        cont += "</table>"
+        cont += "</table></div>"
     cont += "</body></html>"
     return cont
 
