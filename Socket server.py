@@ -74,7 +74,7 @@ def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
                 cont += board[i][j]
                 cont += "</td>"
             cont +="</tr>"
-        cont += "</table></div>"
+        cont += "</table>"
 
     else: # changes the board as the user attack
         cont += '<div class="center"><table ' + style
@@ -88,7 +88,7 @@ def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
                     cont += hitlink + str(i) + str(j) + '>Shot</a>'
                 cont += "</td>"
             cont +="</tr>"
-        cont += "</table></div>"
+        cont += "</table>"
     cont += "</body></html>"
     return cont
 
@@ -237,9 +237,9 @@ def main():
                 else:
                     cont = printboard(records, True)
                     if (hit[:-1] == "hit=1"):
-                        cont += "You hit!"
+                        cont += "<h1>You hit!</h1></div>"
                     else:
-                        cont += "You missed!"
+                        cont += "<h1>You missed!</h1></div>"
 
             else:
                 cont = "non existent path"
