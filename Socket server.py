@@ -36,6 +36,7 @@ body {
   font-family: georgia, serif;
   font-size: x-large;
   color:#ff9900;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/b/be/Dartmoor_mother_and_foal.jpg");
   }
 a:hover {
   color: LimeGreen;
