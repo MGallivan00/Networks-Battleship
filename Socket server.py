@@ -18,7 +18,7 @@ def init(): # checks if the number of arguments is correct
         exit()
 
 
-def winpage():
+def winpage(): # formats the win page to be slightly more exciting
     html = """<html><head><title>Battleship</title></head><body>
     <div style="display:inline-flex;justify-content:center;align-items:center;width:100vw;height:100vh;
     text-align: center;"><h2>You Won!<br>You knocked down all ships!<br>
@@ -43,7 +43,7 @@ def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
             cont +="</tr>"
         cont += "</table>"
 
-    else:
+    else: # changes the board as the user attack
         cont = '<table ' + style
         for i in range(len(board)):
             cont += '<tr ' + style
@@ -62,7 +62,7 @@ def pboard(board):
     for x in board:
         print(x)
 
-def boatcheck(b):
+def boatcheck(b): # defines each ship's name from the character
     boat = ""
     if(b == 'D'):
         boat = "Destroyer"
@@ -77,7 +77,7 @@ def boatcheck(b):
 
     return boat
 
-def result(x, y, board, records):
+def result(x, y, board, records): # responds with a number of outcomes to the client
 
     result = ""
     records[x][y] = 'X'
@@ -101,8 +101,7 @@ def result(x, y, board, records):
 
     return result
 
-def checkEndGame(board):
-    # need to find a way to end the game...
+def checkEndGame(board): # checks if the game is over
     if(not any('D' in sublist for sublist in board) and not any('C' in sublist for sublist in board) and
     not any('S' in sublist for sublist in board) and not any('R' in sublist for sublist in board) and
     not any('B' in sublist for sublist in board)):
