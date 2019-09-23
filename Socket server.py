@@ -24,6 +24,18 @@ def winpage(): # formats the win page to be slightly more exciting
     text-align: center;"><h2>You Won!<br>You knocked down all ships!<br>
     Thank you for playing our game!<br>To play again please restart the server.
     </h2></div></body></html>"""
+    css = """<style type="text/css">
+body {
+  font-family: georgia, serif;
+  font-size: x-large;
+  color:#ff9900;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/e/ea/BB61_USS_Iowa_BB61_broadside_USN.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  }
+</style>"""
+    html += css
     return html
 
 
@@ -36,11 +48,10 @@ body {
   font-family: georgia, serif;
   font-size: x-large;
   color:#ff9900;
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/b/be/Dartmoor_mother_and_foal.jpg");
-  }
-a:hover {
-  color: LimeGreen;
-  text-decoration: none;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/e/ea/BB61_USS_Iowa_BB61_broadside_USN.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   }
 </style>"""
     cont = "<!DOCTYPE html><html><head><title>Battleship</title></head><body>"
