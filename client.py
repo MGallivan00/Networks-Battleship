@@ -48,14 +48,12 @@ def fire():
 
     contentlength = 5+len(str(xcor))+len(str(ycor))
     content = "POST \nHost: " + HOST + "\nContent-Type: misc\nContent-Length: " + str(contentlength) + "\n\n" + "x=" + xcor + "&y=" + ycor
-    # print("\nContent that will be sent:\n" + content)
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT))
         s.sendall(str.encode(content))
         msg = s.recv(1024)
         message = msg.decode("utf-8")
-        # print("\n\nMessage: " + message)
 
         if(message[-3:] == "win"):
             print("\n\nYou destroyed all ships! You Won!")

@@ -87,8 +87,6 @@ def result(x, y, board, records):
     print("\nHere is the record of your opponent's attacks:\n")
     pboard(records)
 
-    # print('\n'.join(['\t'.join([str(cell) for cell in row]) for row in records])) # error
-
     return result
 
 def endgame(board):
