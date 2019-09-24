@@ -249,7 +249,7 @@ def main():
                     if (hit[:-1] == "hit=1"):
                         cont += "<h1>You hit!</h1></div></body></html>"
                     else:
-                        cont += "<h1>You missed!</h1></div</body></html>"
+                        cont += "<h1>You missed!</h1></div></body></html>"
 
             else:
                 cont = "non existent path"
