@@ -29,6 +29,7 @@ def winpage(): # formats the win page to be slightly more exciting
         font-family: georgia, serif;
         font-size: x-large;
         color:#ff9900;
+        text-shadow: 3px 2px black;
         background-image: url("https://nationalinterest.org/sites/default/files/styles/desktop__1260_/public/main_images/uss_new_jersey_6219214852_0.jpg?itok=iGTZnCsr");
         background-position: center;
         background-repeat: no-repeat;
@@ -45,7 +46,7 @@ def winpage(): # formats the win page to be slightly more exciting
 
 
 def printboard(board, game): # prints the board on the browser (uses HTML/CSS)
-    style = 'style="border:1px solid black; width:50%; text-align:center";>' # styling of the board
+    style = 'style="border:1px solid black; width:50%; text-align:center; background-color: #f2f2f2;">' # styling of the board
     link = '<a style="text-decoration:none;color:black;"href=http://127.0.0.1:8080/game.html/'
     hitlink = '<a style="text-decoration:none;color:red;"href=http://127.0.0.1:8080/game.html/'
     css = """<style type="text/css">
